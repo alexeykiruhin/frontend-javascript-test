@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
 import SortableHeader from "./SortableHeader";
 import SortableBody from "./SortableBody";
-import sortMultidimensionalArrayFunc from 'sort-multidimensional-array-func';
 import './Table.css';
-import { block } from 'bem-cn';
-const cn = block('table');
-
 
 class Table extends Component {
     constructor(props) {
@@ -13,15 +9,25 @@ class Table extends Component {
         this.state = {
             data: [],
             columns: [],
-            sortMethod: 'asc'
+            sortMethod: 'asc',
+            currentPage: 1,
+            totalPageCount: [],
         };
         this.handleSort = this.handleSort.bind(this);
+        this.handleNext = this.handleNext.bind(this);
+        this.handleBack = this.handleBack.bind(this);
         this.sort = props.sort;
     }
 
     componentWillMount() {
         const {data, columns} = this.props;
-        this.setState({data, columns});
+
+        let countPages = [];
+        for(let i = 1; i <= data.length; i++){
+            countPages.push(i);
+            console.log(i)
+        }
+        this.setState({data, columns, totalPageCount:countPages});
     }
 
     componentWillReceiveProps(nextProps) {
@@ -29,8 +35,26 @@ class Table extends Component {
         this.setState({data, columns});
     }
 
-    handleSort(id, element, sortMethod) {
-        console.log('sorted by: ' + element + ' method: ' + sortMethod);
+    handleNext() {
+        if (this.state.currentPage !== this.state.totalPageCount.length){
+            const currentPage = this.state.currentPage + 1;
+            this.setState({currentPage});
+        }
+    }
+
+    handleBack() {
+        console.log('Back');
+        if (this.state.currentPage !== 1){
+            const nextP = this.state.currentPage - 1;
+            console.log('if true');
+            this.setState({
+                currentPage: nextP
+            });
+        }
+    }
+
+    handleSort(column, sortMethod) {
+        console.log('sorted by: ' + column + ' method: ' + sortMethod);
 
         let currentSortMethod = 'asc';
 
@@ -44,24 +68,29 @@ class Table extends Component {
             default:
                 currentSortMethod = 'asc';
         }
-
-        const newArr = this.sort(this.props.data, element, currentSortMethod);
-        this.setState({data: newArr, sortMethod: currentSortMethod});
+        const newArr = this.sort(this.state.data[this.state.currentPage-1], column, currentSortMethod);
+        const newData = [...this.state.data];
+        newData[this.state.currentPage-1] = newArr;
+        this.setState({data: newData, sortMethod: currentSortMethod});
     }
 
     render() {
         return (
-            <table className={cn}>
+            <table>
                 <SortableHeader columns={this.state.columns}
                                 onClick={this.handleSort}
-                                sortMethod={this.state.sortMethod}/>
-                <SortableBody data={this.state.data} />
+                                sortMethod={this.state.sortMethod}
+                                currentPage={this.state.currentPage} />
+                <SortableBody data={this.state.data[this.state.currentPage-1]}
+                              pageSize={this.props.pageSize}
+                              currentPage={this.state.currentPage}
+                              handleNext={this.handleNext}
+                              handleBack={this.handleBack}
+                              totalPageCount={this.state.totalPageCount}/>
             </table>
         );
     }
 }
-
-
 
 
 export default Table;

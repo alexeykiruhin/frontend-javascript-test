@@ -4,28 +4,31 @@ import React, {Component} from 'react';
 class SortableBody extends Component {
     constructor(props) {
         super(props);
-        this.cnt = 50;
         this.state = {
-            data: []
+            data: [],
+            currentPage: null,
+            totalPageCount: [],
         };
-        this.handleNext = this.handleNext.bind(this);
+    }
+
+    componentWillMount() {
+        const {data, currentPage, totalPageCount} = this.props;
+        this.setState({data, currentPage, totalPageCount});
     }
 
     componentWillReceiveProps(nextProps) {
-        const {data, cnt} = nextProps;
-        console.log(nextProps.cnt);
-        const splData = data.slice(0, cnt);
-        //splData.map((e) => {console.log(e.id)});
-        this.setState({data: splData});
-    }
-
-    handleNext() {
-        console.log('Next');
-        this.cnt = 10;
-        console.log(this.cnt);
+        console.log('componentWillReceiveProps');
+        console.log('body ' + nextProps.data);
+        const {data, currentPage} = nextProps;
+        this.setState({ data, currentPage});
     }
 
     render() {
+        //debugger;
+
+        console.log('2...' + this.state.data[0]);
+        console.log('3...' + Object.keys(this.state.data));
+        console.log('4...' + (this.state.currentPage - 1));
         //debugger;
         return (
             <tbody>
@@ -40,8 +43,12 @@ class SortableBody extends Component {
                 </tr>
             )}
 
-            <button>Prev</button>
-            <button onClick={this.handleNext}>Next</button>
+            <button onClick={this.props.handleBack}>Prev</button>
+            {this.state.totalPageCount.map((p) => {
+                console.log(p);
+                return <span className=''>{p}</span>
+            })}
+            <button onClick={this.props.handleNext}>Next</button>
             </tbody>
 
         );
@@ -49,3 +56,4 @@ class SortableBody extends Component {
 }
 
 export default SortableBody;
+

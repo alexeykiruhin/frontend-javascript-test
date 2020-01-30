@@ -8,20 +8,21 @@ class SortableHeader extends Component {
         super(props);
         this.state = {
             columns: [],
-            sortMethod: ''
+            sortMethod: '',
+            currentPage: null
         };
         this.onClick = props.onClick;
     }
 
     componentWillMount() {
-        const {columns, sortMethod} = this.props;
-        this.setState({columns: columns, sortMethod: sortMethod});
-        window.col = this.state.columns;
+        const {columns, sortMethod, currentPage} = this.props;
+        console.log('componentWillMount' + sortMethod);
+        this.setState({columns, sortMethod, currentPage});
     }
 
     componentWillReceiveProps(nextProps) {
-        const {columns , sortMethod} = nextProps;
-        this.setState({columns: columns, sortMethod: sortMethod});
+        const {columns , sortMethod, currentPage} = nextProps;
+        this.setState({columns, sortMethod, currentPage});
     }
 
     render() {
@@ -36,11 +37,11 @@ class SortableHeader extends Component {
             <thead>
             <tr>
                 <th>#</th>
-                {this.state.columns.map((element, index) =>
+                {this.state.columns.map((column, index) =>
                     <th key={index}
-                        onClick={() => this.onClick(index, element, this.state.sortMethod)}
+                        onClick={() => this.onClick(column, this.state.sortMethod)}
                     >
-                        {element} <i className={'arrow' + sortFlag}></i>
+                        {column} <i className={'arrow' + sortFlag}></i>
                     </th>
                 )}
             </tr>
