@@ -17,25 +17,24 @@ class SortableBody extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {data, currentPage} = nextProps;
-        this.setState({ data, currentPage});
+        const {data, currentPage, totalPageCount} = nextProps;
+        this.setState({data, currentPage, totalPageCount});
     }
-
 
     render() {
         return (
             <tbody>
             {this.state.data.map((element, index) =>
                 <tr key={index} onClick={() => this.props.handleMoreDetails(element.id)}>
-                    <td >{index + 1}</td>
-                    <td >{element.id}</td>
-                    <td >{element.firstName}</td>
-                    <td >{element.lastName}</td>
-                    <td >{element.email}</td>
-                    <td >{element.phone}</td>
+                    <td>{index + 1}</td>
+                    <td>{element.id}</td>
+                    <td>{element.firstName}</td>
+                    <td>{element.lastName}</td>
+                    <td>{element.email}</td>
+                    <td>{element.phone}</td>
                 </tr>
             )}
-
+            //Пагинация
             <div>
                 <button onClick={() => this.props.handlePagination('prev')}>Prev</button>
                 {this.state.totalPageCount.map((p) => {
@@ -46,7 +45,6 @@ class SortableBody extends Component {
                 <button onClick={() => this.props.handlePagination('next')}>Next</button>
             </div>
             </tbody>
-
 
 
         );

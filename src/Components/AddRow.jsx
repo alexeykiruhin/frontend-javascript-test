@@ -43,7 +43,14 @@ class AddRow extends Component {
             phone: this.state.valuePhone
         };
         this.props.addRow(out);
-        this.setState({toggleAddRow: false, valueId: null, valueFirstName: null, valueLastName: null, valueEmail: null, valuePhone: null})
+        this.setState({
+            toggleAddRow: false,
+            valueId: null,
+            valueFirstName: null,
+            valueLastName: null,
+            valueEmail: null,
+            valuePhone: null
+        })
     }
 
     handleChange(event, inputName) {
@@ -78,34 +85,34 @@ class AddRow extends Component {
                         <label>
                             Id:
                             <input type="text" value={this.state.valueId}
-                                   onChange={(event) => this.handleChange(event,'id')} />
+                                   onChange={(event) => this.handleChange(event, 'id')}/>
                         </label>
                         <label>
                             First name:
                             <input type="text" value={this.state.valueFirstName}
-                                   onChange={(event) => this.handleChange(event,'firstName')} />
+                                   onChange={(event) => this.handleChange(event, 'firstName')}/>
                         </label>
                         <label>
                             Last name:
                             <input type="text" value={this.state.valueLastName}
-                                   onChange={(event) => this.handleChange(event,'lastName')} />
+                                   onChange={(event) => this.handleChange(event, 'lastName')}/>
                         </label>
                         <label>
                             e-mail:
                             <input type="text" value={this.state.valueEmail}
-                                   onChange={(event) => this.handleChange(event,'email')} />
+                                   onChange={(event) => this.handleChange(event, 'email')}/>
                         </label>
                         <label>
                             phone:
                             <input type="text" value={this.state.valuePhone}
-                                   onChange={(event) => this.handleChange(event,'phone')} />
+                                   onChange={(event) => this.handleChange(event, 'phone')}/>
                         </label>
                         <input type="submit" value="Отправить"
                                className={(this.state.valueId &&
                                    this.state.valueFirstName &&
                                    this.state.valueLastName &&
                                    this.state.valueEmail &&
-                                   this.state.valuePhone) ? '':'send'}/>
+                                   this.state.valuePhone) ? '' : 'send'}/>
                     </form>
                 </div>
                 }

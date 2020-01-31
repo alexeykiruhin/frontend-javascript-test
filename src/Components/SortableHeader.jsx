@@ -17,15 +17,15 @@ class SortableHeader extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {columns , sortMethod, currentPage} = nextProps;
+        const {columns, sortMethod, currentPage} = nextProps;
         this.setState({columns, sortMethod, currentPage});
     }
 
     render() {
-        let sortFlag ='';
+        let sortFlag = '';
         if (this.state.sortMethod === 'asc') {
             sortFlag = ' down';
-        }else{
+        } else {
             sortFlag = ' up'
         }
         return (

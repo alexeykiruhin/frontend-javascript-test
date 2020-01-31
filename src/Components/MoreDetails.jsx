@@ -24,16 +24,14 @@ class MoreDetails extends Component {
     render() {
         //debugger;
         const result = this.state.data.filter(data => data.id === this.state.idMoreDetails);
-        window.res = result[0];
         const detail = result[0];
-        console.log(result[0]);
         return (
             <div className='moreDetails'>
                 {this.state.toggleMoreDetails &&
                 <div>
                     Выбран пользователь <b>{detail.firstName + ' ' + detail.lastName}</b><br/>
                     Описание: <br/>
-                    <textarea value={detail.description} /><br/>
+                    <textarea value={detail.description}/><br/>
                     Адрес проживания: <b>{detail.address.streetAddress}</b><br/>
                     Город: <b>{detail.address.city}</b><br/>
                     Провинция/штат: <b>{detail.address.state}</b><br/>

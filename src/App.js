@@ -7,17 +7,21 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
-            columns: [],
-            question: true,
-            table: false,
-            pageSize: 30,
+            data: [], //полученные данные
+            columns: [], //название колонок
+            question: true, //вопрос по объёму данных
+            toggleTable: false, //видимость таблицы до выбора данных
+            pageSize: 30, //количество строк на странице
         };
         this.sort = this.sort.bind(this);
         this.loadData = this.loadData.bind(this);
+        this.updateAfterFilter = this.updateAfterFilter.bind(this);
     }
 
     //сортировка данных
+    //arr - массив данных
+    //column - название колонки по которой сортируем
+    //sortMethod - метод сортировки
     sort(arr, column, sortMethod) {
         switch (sortMethod) {
             case 'asc':
@@ -29,6 +33,11 @@ class App extends Component {
         }
     }
 
+
+    //Обновление данных после фильтрации
+    updateAfterFilter(arr) {
+        this.setState({data: arr});
+    }
 
     // загрузка данных
     loadData(cnt) {
@@ -45,7 +54,7 @@ class App extends Component {
                 for (let i = 0; i <= (data.length); i++) {
                     pagesData.push(data.splice(0, this.state.pageSize));
                 }
-                this.setState({data: pagesData, columns, question: false, table: true});
+                this.setState({data: pagesData, columns, question: false, toggleTable: true});
             });
     }
 
@@ -60,12 +69,13 @@ class App extends Component {
                     <button onClick={() => this.loadData(1000)}>Большой</button>
                     <button onClick={() => this.loadData(32)}>Малый</button>
                 </div>}
-                {this.state.table &&
+                {this.state.toggleTable &&
                 <Table data={this.state.data}
                        columns={this.state.columns}
                        sort={this.sort}
                        loadData={this.loadData}
-                       pageSize={this.state.pageSize} />
+                       pageSize={this.state.pageSize}
+                       updateAfterFilter={this.updateAfterFilter}/>
                 }
             </div>
 

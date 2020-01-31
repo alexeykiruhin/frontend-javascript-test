@@ -4,6 +4,7 @@ i {
     display: inline-block;
     padding: 3px;
 }
+
 .up {
     transform: rotate(-135deg);
     -webkit-transform: rotate(-135deg);
@@ -33,4 +34,8 @@ th {
 
 .send {
     visibility: hidden;
+}
+
+.addRow {
+    padding-bottom: 10px;
 }
