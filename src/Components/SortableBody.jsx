@@ -17,19 +17,11 @@ class SortableBody extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('componentWillReceiveProps');
-        console.log('body ' + nextProps.data);
         const {data, currentPage} = nextProps;
         this.setState({ data, currentPage});
     }
 
     render() {
-        //debugger;
-
-        console.log('2...' + this.state.data[0]);
-        console.log('3...' + Object.keys(this.state.data));
-        console.log('4...' + (this.state.currentPage - 1));
-        //debugger;
         return (
             <tbody>
             {this.state.data.map((element, index) =>
@@ -43,12 +35,15 @@ class SortableBody extends Component {
                 </tr>
             )}
 
-            <button onClick={this.props.handleBack}>Prev</button>
-            {this.state.totalPageCount.map((p) => {
-                console.log(p);
-                return <span className=''>{p}</span>
-            })}
-            <button onClick={this.props.handleNext}>Next</button>
+            <div>
+                <button onClick={() => this.props.handlePagination('prev')}>Prev</button>
+                {this.state.totalPageCount.map((p) => {
+                    console.log(p);
+                    return <span className={p === this.state.currentPage ? 'p toggleP' : 'p'}
+                                 onClick={() => this.props.handlePagination(p)}>{p}</span>
+                })}
+                <button onClick={() => this.props.handlePagination('next')}>Next</button>
+            </div>
             </tbody>
 
         );
@@ -56,4 +51,3 @@ class SortableBody extends Component {
 }
 
 export default SortableBody;
-

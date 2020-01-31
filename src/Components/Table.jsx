@@ -14,8 +14,7 @@ class Table extends Component {
             totalPageCount: [],
         };
         this.handleSort = this.handleSort.bind(this);
-        this.handleNext = this.handleNext.bind(this);
-        this.handleBack = this.handleBack.bind(this);
+        this.handlePagination = this.handlePagination.bind(this);
         this.sort = props.sort;
     }
 
@@ -35,22 +34,18 @@ class Table extends Component {
         this.setState({data, columns});
     }
 
-    handleNext() {
-        if (this.state.currentPage !== this.state.totalPageCount.length){
+    handlePagination(way) {
+        if (this.state.currentPage !== 1 && way === 'prev') {
+            const currentPage = this.state.currentPage - 1;
+            this.setState({currentPage});
+        }else if(this.state.currentPage !== this.state.totalPageCount.length && way === 'next') {
             const currentPage = this.state.currentPage + 1;
             this.setState({currentPage});
+        }else if(Number.isInteger(way)) {
+            console.log('way === number');
+            this.setState({currentPage: way});
         }
-    }
-
-    handleBack() {
-        console.log('Back');
-        if (this.state.currentPage !== 1){
-            const nextP = this.state.currentPage - 1;
-            console.log('if true');
-            this.setState({
-                currentPage: nextP
-            });
-        }
+        console.log('not if');
     }
 
     handleSort(column, sortMethod) {
@@ -84,8 +79,7 @@ class Table extends Component {
                 <SortableBody data={this.state.data[this.state.currentPage-1]}
                               pageSize={this.props.pageSize}
                               currentPage={this.state.currentPage}
-                              handleNext={this.handleNext}
-                              handleBack={this.handleBack}
+                              handlePagination={this.handlePagination}
                               totalPageCount={this.state.totalPageCount}/>
             </table>
         );

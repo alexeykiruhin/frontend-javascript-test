@@ -18,3 +18,11 @@ th {
     cursor: pointer;
     text-align: left;
 }
+
+.p {
+    cursor: pointer;
+}
+
+.toggleP {
+    font-weight: bold;
+}

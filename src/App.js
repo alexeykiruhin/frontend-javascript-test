@@ -11,7 +11,7 @@ class App extends Component {
             columns: [],
             question: true,
             table: false,
-            pageSize: 50,
+            pageSize: 30,
         };
         this.sort = this.sort.bind(this);
         this.loadData = this.loadData.bind(this);
