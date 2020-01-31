@@ -7,8 +7,7 @@ class Filtration extends Component {
             data: [],
             columns: null,
             value: '',
-            notice: '',
-            filter: false,
+            notice: ''
         };
         this.handleSearch = this.handleSearch.bind(this);
     }
@@ -19,8 +18,8 @@ class Filtration extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {data, value, columns, filter} = nextProps;
-        this.setState({data, value, columns, filter});
+        const {data, value, columns} = nextProps;
+        this.setState({data, value, columns});
     }
 
     handleSearch() {
@@ -39,7 +38,7 @@ class Filtration extends Component {
             });
             //выходные данные получились в массиве
             //отфильтровываю пустые массивы
-            const out1 = out.filter(e => e !== false);
+            const out1 = out.filter(e => e.length > 0);
             //если что то нашлось вызываю функцию апдейта данных
             if (out1.length !== 0) {
                 this.props.updateAfterFilter(out1);

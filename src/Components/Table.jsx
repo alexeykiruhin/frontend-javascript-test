@@ -5,6 +5,7 @@ import './Table.css';
 import MoreDetails from "./MoreDetails";
 import AddRow from "./AddRow";
 import Filtration from "./Filtration";
+import Pagination from "./Pagination";
 
 class Table extends Component {
     constructor(props) {
@@ -96,6 +97,7 @@ class Table extends Component {
         this.setState({data});
     }
 
+
     render() {
         return (
             <div>
@@ -119,6 +121,10 @@ class Table extends Component {
                                  idMoreDetails={this.state.idMoreDetails}
                                  handleMoreDetails={this.handleMoreDetails}/>
                 </table>
+                <Pagination data={this.state.data[this.state.currentPage - 1]}
+                            currentPage={this.state.currentPage}
+                            handlePagination={this.handlePagination}
+                            totalPageCount={this.state.totalPageCount} />
             </div>
 
         );

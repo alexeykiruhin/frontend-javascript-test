@@ -78,7 +78,7 @@ class AddRow extends Component {
     render() {
         return (
             <div className='addRow'>
-                <button onClick={this.handleAdd}>Add row</button>
+                <button onClick={this.handleAdd}>Добавить</button>
                 {this.state.toggleAddRow &&
                 <div>
                     <form onSubmit={this.handleSubmit}>

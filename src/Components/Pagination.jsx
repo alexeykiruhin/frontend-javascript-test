@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 
-class SortableBody extends Component {
+class Pagination extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,24 +20,18 @@ class SortableBody extends Component {
         const {data, currentPage, totalPageCount} = nextProps;
         this.setState({data, currentPage, totalPageCount});
     }
-
-
     render() {
         return (
-            <tbody>
-            {this.state.data.map((element, index) =>
-                <tr key={index} onClick={() => this.props.handleMoreDetails(element.id)}>
-                    <td>{index + 1}</td>
-                    <td>{element.id}</td>
-                    <td>{element.firstName}</td>
-                    <td>{element.lastName}</td>
-                    <td>{element.email}</td>
-                    <td>{element.phone}</td>
-                </tr>
-            )}
-            </tbody>
-        );
+
+            <div>
+                <button onClick={() => this.props.handlePagination('prev')}>Prev</button>
+                {this.state.totalPageCount.map((p) => {
+                    return <span className={p === this.state.currentPage ? 'p toggleP' : 'p'}
+                                 onClick={() => this.props.handlePagination(p)}>{p} </span>
+                })}
+                <button onClick={() => this.props.handlePagination('next')}>Next</button>
+            </div>)
     }
 }
 
-export default SortableBody;
+export default Pagination;
