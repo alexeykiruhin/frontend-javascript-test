@@ -26,3 +26,11 @@ th {
 .toggleP {
     font-weight: bold;
 }
+
+.moreDetails {
+    padding-top: 10px;
+}
+
+.send {
+    visibility: hidden;
+}

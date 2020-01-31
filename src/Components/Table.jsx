@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import SortableHeader from "./SortableHeader";
 import SortableBody from "./SortableBody";
 import './Table.css';
+import MoreDetails from "./MoreDetails";
+import AddRow from "./AddRow";
 
 class Table extends Component {
     constructor(props) {
@@ -12,19 +14,21 @@ class Table extends Component {
             sortMethod: 'asc',
             currentPage: 1,
             totalPageCount: [],
+            toggleMoreDetails: false,
+            idMoreDetails: null
         };
         this.handleSort = this.handleSort.bind(this);
         this.handlePagination = this.handlePagination.bind(this);
+        this.handleMoreDetails = this.handleMoreDetails.bind(this);
+        this.addRow = this.addRow.bind(this);
         this.sort = props.sort;
     }
 
     componentWillMount() {
         const {data, columns} = this.props;
-
         let countPages = [];
         for(let i = 1; i <= data.length; i++){
             countPages.push(i);
-            console.log(i)
         }
         this.setState({data, columns, totalPageCount:countPages});
     }
@@ -35,6 +39,7 @@ class Table extends Component {
     }
 
     handlePagination(way) {
+        this.setState({toggleMoreDetails: false});
         if (this.state.currentPage !== 1 && way === 'prev') {
             const currentPage = this.state.currentPage - 1;
             this.setState({currentPage});
@@ -69,19 +74,43 @@ class Table extends Component {
         this.setState({data: newData, sortMethod: currentSortMethod});
     }
 
+    handleMoreDetails(id) {
+        if (Number.isInteger(id)) {
+            this.setState({idMoreDetails: id, toggleMoreDetails: true});
+        }else {
+            this.setState({toggleMoreDetails: false});
+        }
+    }
+
+
+    addRow(addData) {
+        const data = this.state.data.slice();
+        data[this.state.currentPage-1].unshift(addData);
+        this.setState({data});
+    }
+
     render() {
         return (
-            <table>
-                <SortableHeader columns={this.state.columns}
-                                onClick={this.handleSort}
-                                sortMethod={this.state.sortMethod}
-                                currentPage={this.state.currentPage} />
-                <SortableBody data={this.state.data[this.state.currentPage-1]}
-                              pageSize={this.props.pageSize}
-                              currentPage={this.state.currentPage}
-                              handlePagination={this.handlePagination}
-                              totalPageCount={this.state.totalPageCount}/>
-            </table>
+            <div>
+                <AddRow data={this.state.data[this.state.currentPage-1]}
+                        addRow={this.addRow}/>
+                <table>
+                    <SortableHeader columns={this.state.columns}
+                                    onClick={this.handleSort}
+                                    sortMethod={this.state.sortMethod}
+                                    currentPage={this.state.currentPage} />
+                    <SortableBody data={this.state.data[this.state.currentPage-1]}
+                                  currentPage={this.state.currentPage}
+                                  handlePagination={this.handlePagination}
+                                  totalPageCount={this.state.totalPageCount}
+                                  handleMoreDetails={this.handleMoreDetails}/>
+                    <MoreDetails data={this.state.data[this.state.currentPage-1]}
+                                 toggleMoreDetails={this.state.toggleMoreDetails}
+                                 idMoreDetails={this.state.idMoreDetails}
+                                 handleMoreDetails={this.handleMoreDetails}/>
+                </table>
+            </div>
+
         );
     }
 }

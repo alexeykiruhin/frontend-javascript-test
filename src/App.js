@@ -29,6 +29,7 @@ class App extends Component {
         }
     }
 
+
     // загрузка данных
     loadData(cnt) {
         const url1 = `http://www.filltext.com/?rows=${cnt}&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}`;
@@ -64,9 +65,8 @@ class App extends Component {
                        columns={this.state.columns}
                        sort={this.sort}
                        loadData={this.loadData}
-                       pageSize={this.state.pageSize}/>
+                       pageSize={this.state.pageSize} />
                 }
-
             </div>
 
         );

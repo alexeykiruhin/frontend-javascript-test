@@ -1,7 +1,4 @@
 import React, {Component} from 'react';
-// import { block } from 'bem-cn';
-//
-// const cn = block('table');
 
 class SortableHeader extends Component {
     constructor(props) {
@@ -16,7 +13,6 @@ class SortableHeader extends Component {
 
     componentWillMount() {
         const {columns, sortMethod, currentPage} = this.props;
-        console.log('componentWillMount' + sortMethod);
         this.setState({columns, sortMethod, currentPage});
     }
 
@@ -26,7 +22,6 @@ class SortableHeader extends Component {
     }
 
     render() {
-        //debugger;
         let sortFlag ='';
         if (this.state.sortMethod === 'asc') {
             sortFlag = ' down';
