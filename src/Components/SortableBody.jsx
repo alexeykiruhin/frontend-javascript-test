@@ -34,7 +34,6 @@ class SortableBody extends Component {
                     <td>{element.phone}</td>
                 </tr>
             )}
-            //Пагинация
             <div>
                 <button onClick={() => this.props.handlePagination('prev')}>Prev</button>
                 {this.state.totalPageCount.map((p) => {
